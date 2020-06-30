@@ -1,4 +1,4 @@
-# drawmything
+# Draw My Thing
 
 <img width="400" src=""/>
 
