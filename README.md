@@ -23,6 +23,25 @@
 
 <p align="justify">Корисникот е претставен со име, идентификатор и поените кои ги акумулирал. Потребно е да го чува и стримот кој претставува комуникација со серверот за да бидат овозможени сите функционалности. Постојат два типа на корисници, ServerUser и RemoteUser, кои наследуваат од класата User. ServerUser се користи да се претстават податоците на корисникот кои се чуваат кај серверот, при што разликата помеѓу ServerUser и RemoteUser е тоа што ServerUser чува податоци кои ќе помогнат за синхронизација на корисниците кај серверот и дополнително се чуваат поените на корисникот.</p>
  
+<p><b>Код за класата User:</b></p>
+```C#
+[Serializable]
+    public class User
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        [NonSerialized]
+        public TcpClient Client;
+        [NonSerialized]
+        protected BinaryFormatter bf = new BinaryFormatter();
+        public bool ConnectionClosed;
+
+    }
+```
+
+<p><b>Код за класата ServerUser:</b></p>
+
+<p><b>Код за класата RemoteUser:</b></p>
 
 <h2>Упатство за користење</h2>
 
