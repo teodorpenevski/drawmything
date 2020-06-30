@@ -1,6 +1,6 @@
 # Draw My Thing
 
-<img width="400" src=""/>
+<p align="center"><img width="400" src="https://github.com/teodorpenevski/drawmything/blob/master/images/drawmything-logo2.png"/></p>
 
 <h2>Опис на проблемот</h2>
 
