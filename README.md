@@ -42,7 +42,72 @@
 
 <p><b>Код за класата ServerUser:</b></p>
 
+```C#
+[Serializable]
+    public class ServerUser : User
+    {
+        [NonSerialized]
+        public Semaphore s;
+        public int points { get; set; }
+
+        public ServerUser(int id, string name, TcpClient client)
+        {
+            Id = id;
+            Name = name;
+            Client = client;
+            points = 0;
+            s = new Semaphore(1, 1);
+            ConnectionClosed = false;
+        }
+        public void RunServer(BlockingCollection<ClassToSend> bc)
+        {
+            //Initialize
+            try
+            {
+                while (true)
+                {
+                    ClassToSend msg = (ClassToSend)bf.Deserialize(Client.GetStream());
+                    if (msg.Type == Type.Ping)
+                    {
+                        continue;
+                    }
+                    msg.Id = this.Id;
+                    msg.Name = this.Name;
+                    bc.Add(msg);
+                }
+            }
+            catch (Exception e)
+            {
+            }
+        }
+
+    }
+```
+
 <p><b>Код за класата RemoteUser:</b></p>
+
+```C#
+[Serializable]
+    public class RemoteUser : User
+    {
+
+        public RemoteUser(string Name, string Address, int port = 25565)
+        {
+            this.Name = Name;
+            Client = new TcpClient(Address, port);
+            ClassToSend msg = new ClassToSend();
+            msg.Name = this.Name;
+            bf.Serialize(Client.GetStream(), msg);
+        }
+
+        public ClassToSend RunClient()
+        {
+            return (ClassToSend)bf.Deserialize(Client.GetStream());
+        }
+
+
+    }
+```
 
 <h2>Упатство за користење</h2>
 
